@@ -1,3 +1,4 @@
+// @ts-nocheck
 const menu = [
   {
     id: 1,
@@ -72,3 +73,35 @@ const menu = [
     desc: `skateboard fam synth authentic semiotics. Live-edge lyft af, edison bulb yuccie crucifix microdosing.`,
   },
 ];
+
+const sectionCenter = document.querySelector(".section-center");
+
+window.addEventListener("DOMContentLoaded", function () {
+  displayMenuItems(menu);
+});
+
+function displayMenuItems(menuItems) {
+  //map method
+  let displayMenu = menuItems.map(function (item) {
+    console.log(item);
+    //making it dynamic, start accessing the properties in the object
+    return `<article class="menu-item">
+        <img src=${item.img} class="photo" alt=${item.title} />
+        <div class="item-info">
+          <header>
+            <h4>${item.title}</h4>
+            <h4 class="price">${item.price}</h4>
+          </header>
+          <p class="item-text">${item.desc}</p>
+        </div>
+      </article>`;
+  });
+  // @ts-ignore
+  displayMenu = displayMenu.join("");
+
+  // @ts-ignore
+  /* TODO NOT WORKING */
+
+  sectionCenter.innerHTML = displayMenu;
+  console.log(sectionCenter);
+}
