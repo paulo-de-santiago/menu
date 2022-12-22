@@ -75,9 +75,29 @@ const menu = [
 ];
 
 const sectionCenter = document.querySelector(".section-center");
+const filterBtns = document.querySelectorAll(".filter-btn");
 
+// First EventListener - loading all items
 window.addEventListener("DOMContentLoaded", function () {
   displayMenuItems(menu);
+});
+
+//Second EventListener - filter items
+filterBtns.forEach(function (btn) {
+  btn.addEventListener("click", function (e) {
+    const category = e.currentTarget.dataset.id;
+    const menuCategory = menu.filter(function (menuItem) {
+      //console.log(menuItem.category)
+      if (menuItem.category === category) {
+        return menuItem;
+      }
+    });
+    if (category === "all") {
+      return displayMenuItems(menu);
+    } else {
+      displayMenuItems(menuCategory);
+    }
+  });
 });
 
 function displayMenuItems(menuItems) {
@@ -103,5 +123,5 @@ function displayMenuItems(menuItems) {
   /* TODO NOT WORKING */
 
   sectionCenter.innerHTML = displayMenu;
-  console.log(sectionCenter);
+  //console.log(sectionCenter);
 }
