@@ -75,40 +75,12 @@ const menu = [
 ];
 
 const sectionCenter = document.querySelector(".section-center");
-const filterBtns = document.querySelectorAll(".filter-btn");
+const container = document.querySelector(".btn-container");
 
 // First EventListener - loading all items
 window.addEventListener("DOMContentLoaded", function () {
   displayMenuItems(menu);
-  const categories = menu.reduce(
-    function (values, item) {
-      if (!values.includes(item.category)) {
-        values.push(item.category);
-      }
-      //else return values
-      return values;
-    },
-    ["all"]
-  );
-  console.log(categories);
-});
-
-//Second EventListener - filter items
-filterBtns.forEach(function (btn) {
-  btn.addEventListener("click", function (e) {
-    const category = e.currentTarget.dataset.id;
-    const menuCategory = menu.filter(function (menuItem) {
-      //console.log(menuItem.category)
-      if (menuItem.category === category) {
-        return menuItem;
-      }
-    });
-    if (category === "all") {
-      return displayMenuItems(menu);
-    } else {
-      displayMenuItems(menuCategory);
-    }
-  });
+  displayMenuButtons();
 });
 
 function displayMenuItems(menuItems) {
@@ -135,6 +107,49 @@ function displayMenuItems(menuItems) {
 
   sectionCenter.innerHTML = displayMenu;
   //console.log(sectionCenter);
+}
+
+function displayMenuButtons() {
+  const categories = menu.reduce(
+    function (values, item) {
+      if (!values.includes(item.category)) {
+        values.push(item.category);
+      }
+      //else return values
+      return values;
+    },
+    ["all"]
+  );
+
+  /* Selecting the buttons after they have been added dynamically to the HTML */
+  const categoryBtns = categories
+    .map(function (category) {
+      return `<button class="filter-btn" type="button" data-id=${category}>${category}</button>`;
+    })
+    .join("");
+  /* adding something dynamically */
+  container.innerHTML = categoryBtns;
+  /* Access only after adding in the HTML */
+  const filterBtns = document.querySelectorAll(".filter-btn");
+  //Second EventListener - filter items
+  filterBtns.forEach(function (btn) {
+    btn.addEventListener("click", function (e) {
+      const category = e.currentTarget.dataset.id;
+      const menuCategory = menu.filter(function (menuItem) {
+        //console.log(menuItem.category)
+        if (menuItem.category === category) {
+          return menuItem;
+        }
+      });
+      if (category === "all") {
+        return displayMenuItems(menu);
+      } else {
+        displayMenuItems(menuCategory);
+      }
+    });
+  });
+  //  console.log(filterBtns);
+  //console.log(categoryBtns);
 }
 
 //get only unique categories
