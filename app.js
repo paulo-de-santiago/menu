@@ -80,6 +80,17 @@ const filterBtns = document.querySelectorAll(".filter-btn");
 // First EventListener - loading all items
 window.addEventListener("DOMContentLoaded", function () {
   displayMenuItems(menu);
+  const categories = menu.reduce(
+    function (values, item) {
+      if (!values.includes(item.category)) {
+        values.push(item.category);
+      }
+      //else return values
+      return values;
+    },
+    ["all"]
+  );
+  console.log(categories);
 });
 
 //Second EventListener - filter items
@@ -125,3 +136,7 @@ function displayMenuItems(menuItems) {
   sectionCenter.innerHTML = displayMenu;
   //console.log(sectionCenter);
 }
+
+//get only unique categories
+//iterate over categories return buttons
+//make sure to select buttons when they are available
